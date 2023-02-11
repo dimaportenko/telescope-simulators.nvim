@@ -31,7 +31,7 @@ M.run = function(opts)
 
 
   pickers.new(opts, {
-    prompt_title = 'Colors',
+    prompt_title = 'Search Simulator',
     finder = finders.new_table {
       results = devicesTable,
       entry_maker = function(entry)
