@@ -7,10 +7,7 @@ A [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) extension t
 ## Installation
 
 ```lua
-use {
-  'dimaportenko/telescope-simulators.nvim',
-  requires = { 'nvim-telescope/telescope.nvim' }
-}
+use "dimaportenko/telescope-simulators.nvim"
 ```
 
 ## Usage
