@@ -4,71 +4,51 @@ local conf = require('telescope.config').values
 local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
 
+local apple_simulator = require('simulators.apple_simulator')
+
 local M = {}
+
+local select_default = function(prompt_bufnr)
+  actions.close(prompt_bufnr)
+  local selection = action_state.get_selected_entry()
+
+  if apple_simulator.is_simulator_running() then
+    -- open simulator app
+    apple_simulator.open_simulator()
+  end
+
+  -- boot simulator
+  apple_simulator.boot_simulator(selection.value.udid)
+end
 
 M.run = function(opts)
   opts = opts or {}
-
   -- cmd command xcrun simctl list devices available --json
-  local devicesCmd = "xcrun simctl list devices available --json"
-  local devicesCmdOutput = vim.fn.system(devicesCmd)
-  local devicesJson = vim.fn.json_decode(devicesCmdOutput)
+  local devicesJson = apple_simulator.get_available_json()
 
   -- convert devices to table
-  local devicesTable = {}
-  for _, runtime in pairs(devicesJson) do
-    for runtimeKey, devices in pairs(runtime) do
-      local osName, major, minor = runtimeKey:match("(%a+)-(%d+)-(%d+)")
-      local osVersion = osName .. " " .. major .. "." .. minor
+  local devicesTable = apple_simulator.convert_json_to_table(devicesJson)
 
-      for _, device in pairs(devices) do
-        device.osVersion = osVersion
-        table.insert(devicesTable, device)
-      end
-
-    end
+  -- entry_maker
+  local entry_maker = function(entry)
+    local display = entry.name .. " (" .. entry.osVersion .. ")" .. " (" .. entry.state .. ")"
+    return {
+      value = entry,
+      display = display,
+      ordinal = display,
+    }
   end
-
 
   pickers.new(opts, {
     prompt_title = 'Search Simulator',
     finder = finders.new_table {
       results = devicesTable,
-      entry_maker = function(entry)
-        local display = entry.name .. " (" .. entry.osVersion .. ")" .. " (" .. entry.state .. ")"
-        return {
-          value = entry,
-          display = display,
-          ordinal = display,
-        }
-      end
+      entry_maker = entry_maker,
     },
     sorter = conf.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, _)
       actions.select_default:replace(function()
-        actions.close(prompt_bufnr)
-        local selection = action_state.get_selected_entry()
-
-        -- print(vim.inspect(selection))
-          -- print(vim.inspect(devicesTable))
-        -- vim.api.nvim_put({ selection[1] }, "", false, true)
-
-        -- check if simulator app is already running
-        local checkCmd = "ps aux | grep -v grep | grep -c Simulator.app"
-        local checkCmdOutput = vim.fn.system(checkCmd)
-        -- parse number from string output
-        checkCmdOutput = checkCmdOutput:match("%d+")
-        print(vim.inspect(checkCmdOutput))
-        if checkCmdOutput == "0" then
-          -- open simulator app
-          print("open simulator app")
-          local simulatorCmd = "open -a Simulator --args -CurrentDeviceUDID " .. selection.value.udid
-          vim.fn.system(simulatorCmd)
-        end
-
-        -- boot simulator
-        local simulatorCmd = "xcrun simctl boot " .. selection.value.udid
-        vim.fn.system(simulatorCmd)
+        select_default(prompt_bufnr)
       end)
       return true
     end,
@@ -76,6 +56,7 @@ M.run = function(opts)
 end
 
 return M
+
 -- simulators()
 -- simulators(require('telescope.themes').get_dropdown({}))
 -- colors()
@@ -113,4 +94,3 @@ return M
 --     ],
 --   }
 -- }
-
