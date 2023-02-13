@@ -1,8 +1,8 @@
-local telescope = require "telescope"
-local run = require("simulators").run
-
-return telescope.register_extension {
+return require("telescope").register_extension {
+  setup = function(config)
+    require("simulators").setup(config)
+  end,
   exports = {
-    run = run,
+    run = require("simulators").run,
   }
 }

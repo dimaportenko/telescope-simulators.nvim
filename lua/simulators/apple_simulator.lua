@@ -43,4 +43,10 @@ M.convert_json_to_table = function(json)
   return devicesTable
 end
 
+M.get_available = function()
+  local devicesJson = M.get_available_json()
+  local devicesTable = M.convert_json_to_table(devicesJson)
+  return devicesTable
+end
+
 return M
