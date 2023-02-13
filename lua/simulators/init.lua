@@ -17,8 +17,7 @@ M.config = {
 
 M.setup = function(config)
   M.config = vim.tbl_extend("force", M.config, config or {})
-
-  print(vim.inspect(M.config))
+  -- print(vim.inspect(M.config))
 end
 
 local select_default = function(prompt_bufnr)
