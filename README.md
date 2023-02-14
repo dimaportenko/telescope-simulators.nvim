@@ -24,3 +24,13 @@ require("simulators").setup({
   apple_simulator = true,
 })
 ```
+
+## Dependencies
+This project is intended for people who do mobile app development and already have the necessary dependencies installed. The following command line tools are used in this project:
+
+- `emulator` (for Android)
+- `xcrun` (for Apple simulators)
+
+It has been tested on Mac OS, so if you are using a different operating system, your mileage may vary.
+
+Please make sure that you have the latest version of these tools installed before using this project. If you encounter any issues, please refer to the official documentation for the relevant tool for guidance.
