@@ -1,5 +1,25 @@
 # telescope-simulators.nvim
 
+<div align="left">
+  <a align="left" href="https://github.com/dimaportenko?tab=followers">
+    <img src="https://img.shields.io/github/followers/dimaportenko?label=Follow%20%40dimaportenko&style=social" />
+  </a>
+  <br/>
+  <a align="left" href="https://twitter.com/dimaportenko">
+    <img src="https://img.shields.io/twitter/follow/dimaportenko?label=Follow%20%40dimaportenko&style=social" />
+  </a>
+  <br/>
+  <a align="left" href="https://www.youtube.com/channel/UCReKeeIMZywvQoaZPZKzQbQ">
+    <img src="https://img.shields.io/youtube/channel/subscribers/UCReKeeIMZywvQoaZPZKzQbQ" />
+  </a>
+  <br/>
+  <a align="left" href="https://www.youtube.com/channel/UCReKeeIMZywvQoaZPZKzQbQ">
+    <img src="https://img.shields.io/youtube/channel/views/UCReKeeIMZywvQoaZPZKzQbQ" />
+  </a>
+</div>
+<br/>
+
+
 Welcome to the **telescope-simulators.nvim** a [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) extension! This extension is designed to make it easy to open iOS simulators and Android emulators directly from within the Neovim text editor. You can quickly launch simulators and emulators without having to leave the comfort of your text editor. Whether you're developing mobile apps or simply testing your code, this extension will save you time and improve your workflow. Get ready to take your mobile development experience to the next level with **telescope-simulators.nvim**!
 
 
