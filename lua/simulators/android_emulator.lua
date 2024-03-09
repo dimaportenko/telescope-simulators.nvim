@@ -21,7 +21,15 @@ end
 
 M.run = function(name)
   local cmd = "emulator -avd " .. name
-  vim.fn.system(cmd)
+  local job_id = vim.fn.jobstart(cmd, { -- using jobstart here as .system blocks my input
+      detach = true,
+  })
+
+  if job_id <= 0 then
+      vim.notify("Failed to start " .. name, vim.log.levels.ERROR)
+  else
+      vim.notify("Started " .. name, vim.log.levels.INFO)
+  end
 end
 
 return M
